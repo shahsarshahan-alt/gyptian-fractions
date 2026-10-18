@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>کسرهای مصری | یادگیری روش‌ها و تبدیل آنلاین</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#172f38; --teal:#123f49; --gold:#bb8340; --paper:#f7f1e5; --muted:#60727a; }
+    * { box-sizing:border-box; }
+    body { margin:0; width:100%; font-family:Vazirmatn,sans-serif; color:var(--ink); background:#f7f1e5; overflow-x:hidden; }
+    .page-shell { width:100%; overflow:hidden; }
+    .grain { background-image:radial-gradient(#ad946d22 0.7px,transparent 0.7px); background-size:12px 12px; }
+    .hero { background:#123f49; color:#fff9ed; position:relative; }
+    .hero:after { content:""; position:absolute; inset:0; pointer-events:none; opacity:.16; background:radial-gradient(circle at 12% 15%,#e4b36e,transparent 40%); }
+    .eyebrow { letter-spacing:.03em; }
+    
+    /* فرمول‌ها و کسرهای استاندارد و واکنش‌گرا در موبایل */
+    .formula { direction:ltr; unicode-bidi:isolate; font-family:Georgia,serif; font-variant-numeric:lining-nums; white-space:normal; word-break:break-word; }
+    .stacked-fraction { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; line-height:1; font-size: 0.9em; }
+    .stacked-fraction .fraction-top { padding:0 .15em .1em; }
+    .stacked-fraction .fraction-bottom { border-top:2px solid currentColor; padding:.1em .15em 0; }
+    .fraction-expression { display:inline-flex; align-items:center; flex-wrap:wrap; gap:.2em; justify-content:center; }
+
+    @media (max-width: 640px) {
+      .stacked-fraction { font-size: 0.82em; }
+      .formula { font-size: 1.1rem !important; }
+    }
+
+    .lined { border-top:1px solid #d9ceb9; }
+
+    /* انیمیشن‌های جذاب و مدرن */
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatAnim {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-fade { animation: fadeInSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-float { animation: floatAnim 4s ease-in-out infinite; }
+
+    .interactive-card {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .interactive-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px -10px rgba(18, 63, 73, 0.15);
+    }
+
+    .btn-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-hover:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(187, 131, 64, 0.3);
+    }
+    .btn-hover:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .field { width:100%; background:#fffefa; border:1px solid #cfc5b3; border-radius:12px; padding:12px; outline:none; color:var(--ink); direction:ltr; text-align:center; font-size:1.2rem; transition: all 0.3s ease; }
+    .field:focus { border-color:#147482; box-shadow:0 0 0 4px #14748222; transform: scale(1.01); }
+
+    button:focus-visible, a:focus-visible { outline:3px solid #e9a84f; outline-offset:3px; }
+    .result-card { background:#eaf2ed; border:1px solid #c3ddd0; animation: fadeInSlide 0.5s ease forwards; }
+    .result-card[hidden], [hidden] { display:none!important; }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="page-shell grain">
+   <header class="hero">
+    <div class="relative z-10 mx-auto max-w-6xl px-4 py-5 sm:px-9 sm:py-6">
+     <div class="flex items-center justify-between gap-3 animate-fade">
+      <span class="font-bold text-base sm:text-lg">کسرهای مصری باستان</span> 
+      <a href="#converter" class="btn-hover rounded-full border border-white/40 px-3.5 py-1.5 text-xs sm:text-sm font-semibold hover:bg-white/10 transition">ماشین حساب</a>
+     </div>
+     <div class="grid gap-8 items-center py-10 sm:py-14 md:grid-cols-[1.1fr_.9fr] md:py-20">
+      <div class="animate-fade text-center sm:text-right">
+       <p class="eyebrow mb-2 sm:mb-4 font-bold text-[#e4b36e] text-xs sm:text-base">ریاضیات در مصر باستان</p>
+       <h1 class="max-w-xl font-extrabold text-3xl sm:text-4xl md:text-5xl leading-tight">آموزش کامل تبدیل کسرها به کسرهای مصری</h1>
+       <p class="mt-4 sm:mt-5 max-w-xl leading-relaxed sm:leading-loose text-zinc-300 text-sm sm:text-base">در ریاضیات مصر باستان، هر کسر به صورت مجموع چند کسر واحد با صورت یک و مخرج‌های متمایز نوشته می‌شد. در این صفحه دو روش اصولی برای این کار را فرا خواهید گرفت.</p>
+       <a href="#methods" class="btn-hover mt-6 sm:mt-8 inline-flex rounded-full bg-[#bb8340] px-6 py-3 sm:px-7 sm:py-3.5 text-sm sm:text-base font-bold shadow-lg">مشاهده روش‌های آموزش</a>
+      </div>
+      <div class="relative animate-fade" style="animation-delay: 0.2s;">
+       <div class="absolute -inset-2 sm:-inset-3 rounded-[1.5rem] sm:rounded-[2rem] border border-[#d2a765]/50 rotate-2 sm:rotate-3"></div>
+       <div class="relative h-48 sm:h-64 w-full rounded-[1.2rem] sm:rounded-[1.5rem] bg-[#1a4d59] p-4 sm:p-6 flex flex-col justify-center items-center text-center shadow-2xl animate-float">
+        <span class="text-[#e4b36e] font-bold text-base sm:text-xl mb-3">نمونه کسر مصری</span>
+        <div class="formula text-lg sm:text-2xl text-white bg-[#123f49] p-3 sm:p-4 rounded-xl shadow-inner border border-white/10 w-full overflow-x-auto">
+         <span class="fraction-expression">
+          <span class="stacked-fraction"><span class="fraction-top">4</span><span class="fraction-bottom">13</span></span>
+          <span>=</span>
+          <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">4</span></span>
+          <span>+</span>
+          <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">18</span></span>
+          <span>+</span>
+          <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">468</span></span>
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </header>
+
+   <main class="mx-auto max-w-6xl px-4 py-10 sm:px-9 sm:py-16">
+    <section id="methods" class="space-y-8 sm:space-y-12">
+     <div class="text-center max-w-2xl mx-auto animate-fade">
+      <h2 class="font-bold text-2xl sm:text-3xl text-[#123f49]">روش‌های اصلی تبدیل کسرها</h2>
+      <p class="text-muted mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed">متناسب با ساختار مخرج کسر، از یکی از روش‌های زیر استفاده می‌شود.</p>
+     </div>
+
+     <!-- روش اول -->
+     <div class="interactive-card rounded-[1.5rem] sm:rounded-[2rem] bg-[#eee3cc] p-5 sm:p-10 shadow-sm border border-[#dfd2ba]">
+      <div class="grid gap-6 sm:gap-8 md:grid-cols-[.9fr_1.1fr] md:items-start">
+       <div>
+        <span class="inline-block bg-[#bb8340] text-white text-xs sm:text-sm px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full font-bold mb-2 sm:mb-3 shadow-sm">روش اول</span>
+        <h3 class="font-bold text-xl sm:text-2xl text-[#123f49]">استفاده از شمارنده‌های مخرج</h3>
+       </div>
+       <div class="space-y-4 text-sm sm:text-base leading-relaxed sm:leading-loose">
+        <p>اگر مخرج کسر مقسوم‌علیه‌های مناسبی داشته باشد، صورت کسر را به جمع تعدادی از آن شمارنده‌ها تفکیک نموده و سپس کسرها را ساده می‌کنیم.</p>
+        
+        <div class="interactive-card bg-[#fffefa] p-4 sm:p-5 rounded-2xl shadow-sm border border-[#d9ceb9]">
+         <h4 class="font-bold text-[#bb8340] mb-2 text-sm sm:text-base">مثال اول: کسر <span class="formula"><span class="stacked-fraction"><span class="fraction-top">7</span><span class="fraction-bottom">8</span></span></span> (هفت‌هشتم)</h4>
+         <p class="text-xs sm:text-sm text-muted mb-1">شمارنده‌های عدد ۸ عبارتند از: ۱، ۲، ۴ و ۸. مجموع اعداد ۴ و ۲ و ۱ برابر با ۷ می‌شود.</p>
+         <div class="formula mt-3 text-base sm:text-lg bg-[#f7f1e5] p-3 sm:p-3.5 rounded-xl text-center border border-[#e4d7c2] overflow-x-auto">
+          <span class="fraction-expression">
+           <span class="stacked-fraction"><span class="fraction-top">7</span><span class="fraction-bottom">8</span></span><span>=</span>
+           <span class="stacked-fraction"><span class="fraction-top">4</span><span class="fraction-bottom">8</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">2</span><span class="fraction-bottom">8</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">8</span></span><span>=</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">2</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">4</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">8</span></span>
+          </span>
+         </div>
+        </div>
+
+        <div class="interactive-card bg-[#fffefa] p-4 sm:p-5 rounded-2xl shadow-sm border border-[#d9ceb9]">
+         <h4 class="font-bold text-[#bb8340] mb-2 text-sm sm:text-base">مثال دوم: کسر <span class="formula"><span class="stacked-fraction"><span class="fraction-top">5</span><span class="fraction-bottom">6</span></span></span> (پنج‌ششم)</h4>
+         <p class="text-xs sm:text-sm text-muted mb-1">شمارنده‌های عدد ۶ عبارتند از: ۱، ۲، ۳ و ۶. مجموع اعداد ۳ و ۲ برابر با ۵ می‌شود.</p>
+         <div class="formula mt-3 text-base sm:text-lg bg-[#f7f1e5] p-3 sm:p-3.5 rounded-xl text-center border border-[#e4d7c2] overflow-x-auto">
+          <span class="fraction-expression">
+           <span class="stacked-fraction"><span class="fraction-top">5</span><span class="fraction-bottom">6</span></span><span>=</span>
+           <span class="stacked-fraction"><span class="fraction-top">3</span><span class="fraction-bottom">6</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">2</span><span class="fraction-bottom">6</span></span><span>=</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">2</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">3</span></span>
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <!-- روش دوم (حریصانه) -->
+     <div class="interactive-card rounded-[1.5rem] sm:rounded-[2rem] bg-[#123f49] text-white p-5 sm:p-10 shadow-lg border border-[#1e5c6a]">
+      <div class="grid gap-6 sm:gap-8 md:grid-cols-[.9fr_1.1fr] md:items-start">
+       <div>
+        <span class="inline-block bg-[#e4b36e] text-[#123f49] text-xs sm:text-sm px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full font-bold mb-2 sm:mb-3 shadow-sm">روش دوم (جامع)</span>
+        <h3 class="font-bold text-xl sm:text-2xl">روش حریصانه (Greedy Algorithm)</h3>
+       </div>
+       <div class="space-y-4 text-sm sm:text-base leading-relaxed sm:leading-loose text-zinc-200">
+        <p>این روش برای تمامی کسرها، به‌ویژه کسرهایی که مخرج اول دارند (مانند <span class="formula"><span class="stacked-fraction"><span class="fraction-top">4</span><span class="fraction-bottom">13</span></span></span>)، به کار گرفته می‌شود. روند اجرای الگوریتم:</p>
+        <ol class="list-decimal list-inside space-y-2 text-xs sm:text-sm bg-[#1a4d59] p-3.5 sm:p-4 rounded-xl border border-white/10">
+         <li>یافتن بزرگ‌ترین کسر واحد (با صورت ۱) که مقدار آن از کسر فعلی کوچک‌تر یا مساوی باشد.</li>
+         <li>کاهش دادن این کسر واحد از کسر اصلی.</li>
+         <li>تکرار گام‌های فوق روی کسر باقیمانده تا زمان رسیدن به باقیمانده صفر.</li>
+        </ol>
+
+        <div class="interactive-card bg-[#1a4d59] p-4 sm:p-5 rounded-2xl shadow-sm border border-[#2b6573]">
+         <h4 class="font-bold text-[#e4b36e] mb-2 text-sm sm:text-base">بررسی گام‌به‌گام کسر <span class="formula"><span class="stacked-fraction"><span class="fraction-top">4</span><span class="fraction-bottom">13</span></span></span>:</h4>
+         <p class="text-xs sm:text-sm mb-1"><b>گام اول:</b> بزرگ‌ترین کسر واحد کوچک‌تر از <span class="formula"><span class="stacked-fraction"><span class="fraction-top">4</span><span class="fraction-bottom">13</span></span></span> برابر است با <span class="formula"><span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">4</span></span></span>.</p>
+         <p class="text-xs sm:text-sm mb-2 text-zinc-300">با تفریق آن، باقیمانده برابر با <span class="formula"><span class="stacked-fraction"><span class="fraction-top">3</span><span class="fraction-bottom">52</span></span></span> می‌شود.</p>
+         <p class="text-xs sm:text-sm mb-1"><b>گام دوم:</b> بزرگ‌ترین کسر واحد برای <span class="formula"><span class="stacked-fraction"><span class="fraction-top">3</span><span class="fraction-bottom">52</span></span></span> برابر با <span class="formula"><span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">18</span></span></span> است.</p>
+         <p class="text-xs sm:text-sm mb-2 text-zinc-300">با تفریق آن، باقیمانده جدید <span class="formula"><span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">468</span></span></span> حاصل می‌شود.</p>
+         <div class="formula mt-3 text-base sm:text-lg bg-[#123f49] p-3 sm:p-4 rounded-xl text-center text-[#e4b36e] border border-white/10 overflow-x-auto">
+          <span class="fraction-expression">
+           <span class="stacked-fraction"><span class="fraction-top">4</span><span class="fraction-bottom">13</span></span><span>=</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">4</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">18</span></span><span>+</span>
+           <span class="stacked-fraction"><span class="fraction-top">1</span><span class="fraction-bottom">468</span></span>
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+
+    <!-- ابزار محاسباتی -->
+    <section id="converter" class="mt-12 sm:mt-20 interactive-card grid overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] bg-[#123f49] text-white shadow-2xl md:grid-cols-[.9fr_1.1fr] border border-white/10">
+     <div class="p-5 sm:p-10 flex flex-col justify-center">
+      <span class="text-[#bb8340] font-bold mb-2 sm:mb-3 text-xs sm:text-sm">آزمایشگاه تخصصی کسرها</span>
+      <h2 class="font-bold text-2xl sm:text-3xl leading-snug">ماشین حساب تبدیل به کسر مصری</h2>
+      <p class="mt-3 sm:mt-4 leading-relaxed sm:leading-loose text-zinc-300 text-xs sm:text-sm">صورت و مخرج مورد نظر خود را وارد کنید تا سیستم به صورت خودکار و دقیق آن را به مجموع کسرهای واحد تبدیل کند.</p>
+     </div>
+     <div class="bg-[#f7f1e5] text-zinc-800 p-5 sm:p-10">
+      <form id="fraction-form" novalidate>
+       <div class="grid grid-cols-2 gap-3 sm:gap-4">
+        <div>
+         <label for="numerator" class="mb-1.5 sm:mb-2 block font-semibold text-xs sm:text-sm text-[#123f49]">صورت کسر</label> 
+         <input id="numerator" class="field" inputmode="numeric" autocomplete="off" value="4">
+        </div>
+        <div>
+         <label for="denominator" class="mb-1.5 sm:mb-2 block font-semibold text-xs sm:text-sm text-[#123f49]">مخرج کسر</label> 
+         <input id="denominator" class="field" inputmode="numeric" autocomplete="off" value="13">
+        </div>
+       </div>
+       <button type="submit" class="btn-hover mt-5 sm:mt-6 w-full rounded-xl bg-[#123f49] text-white px-4 py-3 sm:py-3.5 font-bold shadow-md text-sm sm:text-base">محاسبه کسر مصری</button>
+      </form>
+      <p id="error" role="alert" class="mt-4 text-red-600 text-xs sm:text-sm font-semibold" hidden></p>
+      <div id="result" class="result-card mt-5 sm:mt-6 rounded-2xl p-4 sm:p-5" hidden aria-live="polite">
+       <h3 class="font-bold text-[#123f49] mb-2 text-sm sm:text-base">نتیجه تجزیه رسمی:</h3>
+       <p id="result-formula" class="formula mt-3 break-words text-lg sm:text-xl leading-relaxed text-[#123f49] overflow-x-auto p-1" dir="ltr"></p>
+       <ol id="result-steps" class="lined mt-4 space-y-2 pt-3 text-xs sm:text-sm leading-relaxed text-zinc-700"></ol>
+      </div>
+     </div>
+    </section>
+   </main>
+
+   <footer class="mx-auto max-w-6xl px-4 pb-8 sm:px-9 text-center text-xs sm:text-sm text-muted">
+    <div class="lined pt-6">
+     <p>طراحی شده با الهام از تاریخ ریاضیات و تمدن باستان مصر 🏺</p>
+    </div>
+   </footer>
+  </div>
+
+  <script>
+   const form = document.getElementById('fraction-form');
+   const error = document.getElementById('error');
+   const result = document.getElementById('result');
+   const formula = document.getElementById('result-formula');
+   const steps = document.getElementById('result-steps');
+
+   function normalizeDigits(value) {
+    return value.trim()
+     .replace(/[۰-۹]/g, digit => String(digit.charCodeAt(0) - 1776))
+     .replace(/[٠-٩]/g, digit => String(digit.charCodeAt(0) - 1632));
+   }
+
+   function gcd(a, b) {
+    let x = a < 0 ? -a : a;
+    let y = b < 0 ? -b : b;
+    while (y !== 0n) {
+     let temp = y;
+     y = x % y;
+     x = temp;
+    }
+    return x;
+   }
+
+   form.addEventListener('submit', event => {
+    event.preventDefault();
+    error.hidden = true;
+    result.hidden = true;
+    
+    const aText = normalizeDigits(document.getElementById('numerator').value);
+    const bText = normalizeDigits(document.getElementById('denominator').value);
+    
+    if (!/^[0-9]{1,30}$/.test(aText) \vert{}\vert{} !/^[0-9]{1,30}$/.test(bText)) {
+     error.textContent = 'لطفاً برای صورت و مخرج، عدد صحیح مثبت وارد کنید.';
+     error.hidden = false;
+     return;
+    }
+    
+    let a = BigInt(aText);
+    let b = BigInt(bText);
+    
+    if (a === 0n || b === 0n || a >= b) {
+     error.textContent = 'صورت و مخرج باید مثبت باشند و صورت باید کوچک‌تر از مخرج باشد.';
+     error.hidden = false;
+     return;
+    }
+    
+    const common = gcd(a, b);
+    a = a / common;
+    b = b / common;
+
+    const denominators = [];
+    const explanations = [];
+    let currentA = a;
+    let currentB = b;
+    let iterations = 0;
+
+    while (currentA > 0n && iterations < 20) {
+     let unit = (currentB + currentA - 1n) / currentA;
+     
+     denominators.push(unit.toString());
+     explanations.push(`از کسر باقیمانده، کسر واحد 1/${unit} را کم می‌کنیم.`);
+
+     let nextA = currentA * unit - currentB;
+     let nextB = currentB * unit;
+
+     if (nextA === 0n) {
+      break;
+     }
+
+     let div = gcd(nextA, nextB);
+     currentA = nextA / div;
+     currentB = nextB / div;
+     iterations++;
+    }
+
+    if (currentA > 0n) {
+     error.textContent = 'محاسبه برای این کسر طولانی شد. لطفاً کسر دیگری امتحان کنید.';
+     error.hidden = false;
+     return;
+    }
+
+    const fractionMarkup = (top, bottom) => `<span class="stacked-fraction" aria-label="${top} روی ${bottom}"><span class="fraction-top">${top}</span><span class="fraction-bottom">${bottom}</span></span>`;
+    
+    formula.innerHTML = `<span class="fraction-expression">${fractionMarkup(aText, bText)}<span>=</span>${denominators.map(d => fractionMarkup('1', d)).join('<span>+</span>')}</span>`;
+    
+    steps.replaceChildren();
+    explanations.forEach(text => {
+     const item = document.createElement('li');
+     item.textContent = text;
+     steps.appendChild(item);
+    });
+    
+    result.hidden = false;
+   });
+  </script>
+ </body>
+</html>
